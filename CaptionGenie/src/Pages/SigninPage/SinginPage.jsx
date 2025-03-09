@@ -1,140 +1,99 @@
-import { useState } from "react";
+import  { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { signup } from "../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (username === "admin" && password === "password") {
-      alert("Login successful");
-    } else {
-      setError("Invalid username or password");
-    }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-    alert("Signup successful");
+    console.log("Form Data Submitted:", formData);
+    await dispatch(signup({ name, email, password }));
+    navigate("/profile");
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center">{isLogin ? "Login" : "Sign Up"}</h2>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        {isLogin ? (
-          <form onSubmit={handleLogin}>
-            <div className="mb-4">
-              <label className="block text-gray-700">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-              Login
-            </button>
-            <button className="w-full bg-red-500 text-white py-2 rounded mt-2" onClick={() => alert("Google Login")}>Login with Google</button>
-            <p className="text-center mt-4">
-              Don't have an account? <span className="text-blue-500 cursor-pointer" onClick={() => setIsLogin(false)}>Sign up</span>
+    <div className="h-[50rem] flex items-center justify-center bg-gray-100">
+      <div className="bg-white flex shadow-lg rounded-lg overflow-hidden w-3/5">
+        
+        {/* Left Side - Testimonial */}
+        <div className="w-1/2 bg-gray-200 flex flex-col justify-center relative">
+          <img 
+            src="https://images.unsplash.com/flagged/photo-1555475693-6e207bee0737?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Testimonial" 
+          />
+          <div className="absolute p-5 text-[var(--text-color-1)]">
+            <p className="text-sm font-semibold">
+              "We've been using Untitled to kick-start every new project and can't imagine working without it."
             </p>
-          </form>
-        ) : (
-          <form onSubmit={handleSignup}>
-            <div className="mb-4">
-              <label className="block text-gray-700">First Name</label>
-              <input
-                type="text"
-                value={fname}
-                onChange={(e) => setFname(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
+            <div className="mt-6">
+              <p className="font-bold">Olivia Rhye</p>
+              <p className="text-sm">Lead Designer, Layers</p>
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Last Name</label>
-              <input
-                type="text"
-                value={lname}
-                onChange={(e) => setLname(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Date of Birth</label>
-              <input
-                type="date"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Re-enter Password</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                required
-              />
-            </div>
-            <button type="submit" className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
-              Sign Up
+          </div>
+        </div>
+
+        {/* Right Side - Sign In Form */}
+        <div className="w-1/2 p-10 flex flex-col justify-center">
+          <h2 className="text-2xl font-bold text-gray-900">Create an account</h2>
+          <p className="text-gray-600 text-sm mb-4">Let's get started with your 30-day free trial.</p>
+          
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg mb-3"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg mb-3"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg mb-3"
+            />
+            <button type="submit" className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800">
+              Create account
             </button>
-            <p className="text-center mt-4">
-              Already have an account? <span className="text-blue-500 cursor-pointer" onClick={() => setIsLogin(true)}>Login</span>
-            </p>
           </form>
-        )}
+
+          <button className="w-full flex items-center justify-center border mt-3 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+              alt="Google"
+              className="w-5 h-5 mr-2"
+            />
+            Sign up with Google
+          </button>
+
+          <p className="text-gray-600 text-sm text-center mt-4">
+            Already have an account? <NavLink to='/login' className="text-blue-600">Login</NavLink>
+          </p>
+        </div>
       </div>
     </div>
   );

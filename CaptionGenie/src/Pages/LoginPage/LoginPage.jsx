@@ -1,14 +1,21 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin =async (e) => {
     e.preventDefault();
     if (username === "admin" && password === "password") {
       alert("Login successful");
+      await dispatch(login({ email, password }));
+      navigate("/profile");
     } else {
       setError("Invalid username or password");
     }
