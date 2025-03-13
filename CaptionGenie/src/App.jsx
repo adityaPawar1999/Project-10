@@ -7,6 +7,7 @@ import SigninPage from "./Pages/SigninPage/SinginPage";
 import Profile from "./pages/ProfilePage/Profile";
 import Navbar from "./Components/Navbar/Navbar";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import HomePage from "./Pages/HomePage/HomePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const App = () => {
       <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/profile" /> : <Login />} />
+          <Route path="/" element={user ? <Navigate to="/profile" /> : <HomePage />} />
           <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
           <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
           <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
