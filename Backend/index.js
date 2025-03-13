@@ -16,10 +16,9 @@ console.log('Server is running...');
 // ✅ Apply middleware in the correct order
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  
-  origin: ["http://localhost:3000", "http://localhost:5173"], // Adjust for your frontend
-  credentials: true, // ✅ Allows cookies to be sent
+app.use(cors({ 
+  origin: ["https://captiongenie-nlsq.vercel.app"], // Replace with your frontend URL
+  credentials: true // If using cookies or authentication
 }));
 
 // ✅ Register routes after middleware
