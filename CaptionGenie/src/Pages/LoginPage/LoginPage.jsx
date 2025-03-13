@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/authSlice";
+import { login } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); // Define email state
+  const [password, setPassword] = useState(""); // Define password state
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin =async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "password") {
-      alert("Login successful");
-      await dispatch(login({ email, password }));
-      navigate("/profile");
-    } else {
-      setError("Invalid username or password");
+    setError(""); // Clear previous errors
+
+    try {
+      console.log("Login attempt with:", email, password);
+      
+      const result = await dispatch(login({ email, password }));
+
+      if (login.fulfilled.match(result)) {
+        alert("Login successful");
+        navigate("/profile");
+      } else {
+        setError(result.payload?.message || "Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Something went wrong. Please try again.");
     }
-  };
+  };  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -28,11 +38,11 @@ const LoginPage = () => {
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-700">Username</label>
+            <label className="block text-gray-700">Email</label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"  // Fixed type
+              value={email}  // Fixed variable
+              onChange={(e) => setEmail(e.target.value)} // Fixed state setter
               className="w-full p-2 border border-gray-300 rounded mt-1"
               required
             />

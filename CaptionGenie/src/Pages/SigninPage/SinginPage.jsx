@@ -99,12 +99,14 @@ const SigninPage = () => {
             </button>
           </form>
 
-          
-          <button onClick={handleGoogleSignup} className="w-full flex items-center justify-center border mt-3 py-3 rounded-lg font-semibold hover:bg-gray-200">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="w-5 h-5 mr-2" />
-  Sign up with Google
-</button>
-
+          <button className="w-full flex items-center justify-center border mt-3 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+              alt="Google"
+              className="w-5 h-5 mr-2"
+            />
+            Sign up with Google
+          </button>
 
           <p className="text-gray-600 text-sm text-center mt-4">
             Already have an account? <NavLink to='/login' className="text-blue-600">Login</NavLink>
