@@ -75,6 +75,7 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("token", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ message: "Logged out successfully" });
+  console.log('logout hhit')
 });
 
 router.get("/auth", async (req, res) => {
