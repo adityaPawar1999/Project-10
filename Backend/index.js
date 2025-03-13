@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
@@ -14,8 +15,9 @@ console.log('Server is running...');
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:5173"],
-  credentials: true,
+  
+  origin: ["http://localhost:3000", "http://localhost:5173"], // Adjust for your frontend
+  credentials: true, // ✅ Allows cookies to be sent
 }));
 
 // ✅ Register routes after middleware

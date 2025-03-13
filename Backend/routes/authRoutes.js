@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
+const authMiddleware = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 const generateToken = (user) => {
@@ -43,33 +45,49 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
 router.post("/login", async (req, res) => {
-  console.log("login hit 1")
   try {
-    console.log("login hit 2")
     const { email, password } = req.body;
-    console.log(email,password)
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
-    
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = generateToken(user);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "10d" });
 
     res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true,  // Use true if using HTTPS, false if HTTP
+      httpOnly: true, // Secure storage
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
     });
 
-    res.json(user);
+    res.json({ message: "Login successful", user });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
+
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user data" });
+  }
+});
+
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
+});
+
+// Logout Route (Clears Token)
+
 
 
 router.post("/logout", (req, res) => {

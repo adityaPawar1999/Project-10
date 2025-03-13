@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./redux/authSlice";
-import Login from "./pages/LoginPage/LoginPage";
-import SigninPage from "./Pages/SigninPage/SinginPage";
-import Profile from "./pages/ProfilePage/Profile";
+import { getAuthToken, removeAuthToken } from "./redux/authService"; // Corrected import path
 import Navbar from "./Components/Navbar/Navbar";
-import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./Pages/HomePage/HomePage";
-import HomePa from "./Pages/Ho/HomePa";
+import SigninPage from "./Pages/SigninPage/SinginPage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import AboutPage from "./Pages/AboutPage/AboutPage";
 
 const App = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      removeAuthToken();
+      setIsAuthenticated(false);
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -33,14 +43,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-white dark:bg-black  dark:text-white min-h-screen">
+      <div className="bg-white dark:bg-black dark:text-white min-h-screen">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <Routes>
-          <Route path="/aboutUs" element={<AboutPage/>} />
-          <Route path="/" element={user ? <Navigate to="/profile" /> : <HomePage />} />
-          <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
-          <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
-          <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/aboutUs" element={<AboutPage />} />
+          <Route path="/signin" element={isAuthenticated ? <Navigate to="/profile" /> : <SigninPage />} />
+          <Route path="/login" element={isAuthenticated ? <Navigate to="/profile" /> : <LoginPage />} />
+          <Route path="/profile" element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />} />
         </Routes>
       </div>
     </BrowserRouter>
