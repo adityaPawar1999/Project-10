@@ -6,15 +6,16 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
   return response.data;
 });
 
-export const login = createAsyncThunk("auth/login", async (userData) => {
+export const login = createAsyncThunk("api/auth/login", async (userData) => {
   const response = await axios.post("http://localhost:5000/login", userData, { withCredentials: true });
   return response.data;
 });
 
-export const signup = createAsyncThunk("auth/signup", async (userData) => {
-  const response = await axios.post("http://localhost:5000/signup", userData, { withCredentials: true });
+export const signup = createAsyncThunk("api/auth/signup", async (userData) => {
+  const response = await axios.post("http://localhost:5000/api/auth/signup", userData, { withCredentials: true });
   return response.data;
 });
+
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await axios.post("http://localhost:5000/logout", {}, { withCredentials: true });

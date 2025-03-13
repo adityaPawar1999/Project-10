@@ -18,13 +18,17 @@ const SigninPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+    
+    // Extract values from formData
+    const { name, email, password } = formData;
+  
     await dispatch(signup({ name, email, password }));
     navigate("/profile");
   };
-
+  
   return (
     <div className="h-[50rem] flex items-center justify-center bg-gray-100">
       <div className="bg-white flex shadow-lg rounded-lg overflow-hidden w-3/5">

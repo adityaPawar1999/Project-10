@@ -20,6 +20,7 @@ router.post("/signup", async (req, res) => {
     await user.save();
     const token = generateToken(user);
     res.cookie("token", token, { httpOnly: true }).json(user);
+    console.log("data saved",user)
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
