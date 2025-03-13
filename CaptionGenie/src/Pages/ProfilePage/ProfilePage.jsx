@@ -14,8 +14,8 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
-      <h2>Profile</h2>
+    <div className=" h-screen bg-white text-[var(--text-color-1)]">
+             <h2>Profile</h2>
       <p>Name: {user?.name}</p>
       <p>Email: {user?.email}</p>
       <button onClick={handleLogout}>Logout</button>

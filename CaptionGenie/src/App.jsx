@@ -9,6 +9,7 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import AboutPage from "./Pages/AboutPage/AboutPage";
 import SigninPage from "./Pages/SigninPage/SinginPage";
 import { isTokenValid } from "./Redux/isTokenValid";
+import AddPost from "./Pages/AppPosts/AddPost";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -50,11 +51,13 @@ const App = () => {
       <div className="bg-white dark:bg-black dark:text-white min-h-screen">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/aboutUs" element={<AboutPage />} />
-          <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
-          <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
-          <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/aboutUs" element={<AboutPage />} />
+        <Route path="/addpost" element={user ? <AddPost /> : <Navigate to="/login" />} />  {/* ✅ Fixed */}
+        <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
+        <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
+        <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
+
         </Routes>
       </div>
     </BrowserRouter>

@@ -52,7 +52,7 @@ const Navbar = () => {
           {user ? (
             <>
               <li><Link to="/addpost" className="block p-3">ADD POST</Link></li>
-              <li><Link to="/profile" className="block p-3">{user.name}</Link></li>
+              <li><Link to="/profile" className="block p-3 uppercase">{user.name}</Link></li>
               <li>
                 <button onClick={handleLogout} className="flex items-center p-3">
                   Logout <LogOut className="ml-2" size={20} />
