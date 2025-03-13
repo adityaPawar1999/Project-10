@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./themeSlice";
-import authReducer from "./authSlice";
+import authReducer from "./authSlice";  // ✅ Fixed import
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";
@@ -8,7 +8,7 @@ import { combineReducers } from "redux";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["theme"], // Persist only theme state
+  whitelist: ["theme"],
 };
 
 const rootReducer = combineReducers({

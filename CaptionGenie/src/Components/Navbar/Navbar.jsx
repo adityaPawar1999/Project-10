@@ -48,17 +48,17 @@ const Navbar = () => {
         <ul className={`md:flex md:space-x-6 absolute md:static top-16 left-0 w-screen md:w-auto bg-gray-200 dark:bg-black transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
           <li><Link to="/" className="block p-3">Home</Link></li>
           <li><Link to="/aboutUs" className="block p-3">About</Link></li>
-          <li><Link to="/services" className="block p-3">Services</Link></li>
 
           {user ? (
             <>
-              <li className="block p-3">{user.name}</li>
+              <li><Link to="/addpost" className="block p-3">ADD POST</Link></li>
+              <li><Link to="/profile" className="block p-3">{user.name}</Link></li>
               <li>
                 <button onClick={handleLogout} className="flex items-center p-3">
                   Logout <LogOut className="ml-2" size={20} />
                 </button>
               </li>
-              <li><Link to="/addpost" className="block p-3">ADD POST</Link></li>
+              
             </>
           ) : (
             <>

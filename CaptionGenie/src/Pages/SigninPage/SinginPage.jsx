@@ -2,10 +2,13 @@ import  { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { signup } from "../../Redux/authSlice";
+
+
+import { signup } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
+  console.log("data here 1")
   const [formData, setFormData] = useState({
     name: "",
     email: "",

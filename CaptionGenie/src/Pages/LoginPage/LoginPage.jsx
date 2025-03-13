@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+
 import { useNavigate } from "react-router-dom";
 import { setAuthToken } from "../../Redux/authService";
 
@@ -11,29 +12,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setError(""); // Clear previous errors
-  
-  //   try {
-  //     console.log("Login attempt with:", email, password);
-      
-  //     const result = await dispatch(login({ email, password }));
-  
-  //     if (login.fulfilled.match(result)) {
-  //       const token = result.payload.token; // Ensure you're using the correct token from API response
-  //       setAuthToken(token); // Store token for persistence
-  //       alert("Login successful");
-  //       navigate("/profile");
-  //       window.location.reload(); // Refresh to apply authentication state
-  //     } else {
-  //       setError(result.payload?.message || "Invalid email or password");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     setError("Something went wrong. Please try again.");
-  //   }
-  // };
   
 
   const handleLogin = async (e) => {
@@ -42,11 +20,16 @@ const LoginPage = () => {
   
     try {
       const result = await dispatch(login({ email, password }));
-  
+    
       if (login.fulfilled.match(result)) {
         const token = result.payload?.token; // ✅ Ensure token comes from API
         if (token) {
           setAuthToken(token);
+    
+          // 🔹 Store token in both localStorage & sessionStorage
+          localStorage.setItem("token", token); // Persistent login
+          sessionStorage.setItem("token", token); // Session-based login
+    
           alert("Login successful");
           navigate("/profile");
           window.location.reload();
@@ -59,7 +42,8 @@ const LoginPage = () => {
     } catch (error) {
       setError("Something went wrong. Please try again.");
     }
-  };
+  }
+    
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
