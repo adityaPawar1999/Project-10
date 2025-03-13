@@ -2,7 +2,7 @@ import  { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { signup } from "../../redux/authSlice";
+import { signup } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
@@ -18,15 +18,29 @@ const SigninPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Form Data Submitted:", formData);
+    
+  //   // Extract values from formData
+  //   const { name, email, password } = formData;
+  
+  //   await dispatch(signup({ name, email, password }));
+  //   navigate("/profile");
+  // };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    
-    // Extract values from formData
-    const { name, email, password } = formData;
+    console.log("Submitting Data:", formData); // Debugging
   
-    await dispatch(signup({ name, email, password }));
-    navigate("/profile");
+    try {
+      await dispatch(signup(formData)).unwrap();
+      console.log("Signup Success");
+      navigate("/profile");
+    } catch (error) {
+      console.error("Signup Failed:", error);
+    }
   };
   
   return (
@@ -85,14 +99,12 @@ const SigninPage = () => {
             </button>
           </form>
 
-          <button className="w-full flex items-center justify-center border mt-3 py-3 rounded-lg font-semibold hover:bg-gray-200">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
-              alt="Google"
-              className="w-5 h-5 mr-2"
-            />
-            Sign up with Google
-          </button>
+          
+          <button onClick={handleGoogleSignup} className="w-full flex items-center justify-center border mt-3 py-3 rounded-lg font-semibold hover:bg-gray-200">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="w-5 h-5 mr-2" />
+  Sign up with Google
+</button>
+
 
           <p className="text-gray-600 text-sm text-center mt-4">
             Already have an account? <NavLink to='/login' className="text-blue-600">Login</NavLink>
