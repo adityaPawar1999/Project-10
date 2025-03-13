@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white dark:bg-black text-black dark:text-white px-10 shadow-md relative">
       <div className="container mx-auto flex justify-between items-center py-3">
-        <Link to="/" className="text-xl font-bold">
+        <Link to="/" className="text-xl font-bold  ">
           captionGEnie
         </Link>
 
@@ -45,9 +45,9 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className={`md:flex md:space-x-6 absolute md:static top-16 left-0 w-screen md:w-auto bg-gray-200 dark:bg-gray-900 transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
+        <ul className={`md:flex md:space-x-6 absolute md:static top-16 left-0 w-screen md:w-auto bg-gray-200 dark:bg-black transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
           <li><Link to="/" className="block p-3">Home</Link></li>
-          <li><Link to="/about" className="block p-3">About</Link></li>
+          <li><Link to="/aboutUs" className="block p-3">About</Link></li>
           <li><Link to="/services" className="block p-3">Services</Link></li>
 
           {user ? (

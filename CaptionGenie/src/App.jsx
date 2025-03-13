@@ -8,6 +8,8 @@ import Profile from "./pages/ProfilePage/Profile";
 import Navbar from "./Components/Navbar/Navbar";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./Pages/HomePage/HomePage";
+import HomePa from "./Pages/Ho/HomePa";
+import AboutPage from "./Pages/AboutPage/AboutPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,9 +33,10 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
+      <div className="bg-white dark:bg-black  dark:text-white min-h-screen">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <Routes>
+          <Route path="/aboutUs" element={<AboutPage/>} />
           <Route path="/" element={user ? <Navigate to="/profile" /> : <HomePage />} />
           <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
           <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />

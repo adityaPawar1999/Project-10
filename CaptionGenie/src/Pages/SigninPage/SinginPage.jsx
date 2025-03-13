@@ -53,7 +53,7 @@ const SigninPage = () => {
             src="https://images.unsplash.com/flagged/photo-1555475693-6e207bee0737?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Testimonial" 
           />
-          <div className="absolute p-5 text-[var(--text-color-1)]">
+          <div className="absolute p-5 text-[var(--text-color-2)]">
             <p className="text-sm font-semibold">
               "We've been using Untitled to kick-start every new project and can't imagine working without it."
             </p>
@@ -69,7 +69,7 @@ const SigninPage = () => {
           <h2 className="text-2xl font-bold text-gray-900">Create an account</h2>
           <p className="text-gray-600 text-sm mb-4">Let's get started with your 30-day free trial.</p>
           
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} >
             <input
               type="text"
               name="name"
